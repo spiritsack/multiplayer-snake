@@ -8,3 +8,6 @@ Run server with `node server.js`
 Direct browser to http://localhost:3000
 
 Open a new window with the same address to multiplayer
+
+
+![screenshot](https://github.com/spiritsack/multiplayer-snake/raw/master/snake.png)
