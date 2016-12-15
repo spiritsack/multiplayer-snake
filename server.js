@@ -47,14 +47,11 @@ function newConnection(socket) {
         var snake;
         for(var i = 0; i < snakes.length; i++) {
             if(socket.id == snakes[i].id) {
-                snake = snakes[i];
+                snakes[i].x = data.x;
+                snakes[i].y = data.y;
+                snakes[i].total = data.total;
+                snakes[i].tail = data.tail;
             }
-        }
-        if(snake) {
-            snake.x = data.x;
-            snake.y = data.y;
-            snake.total = data.total;
-            snake.tail = data.tail;
         }
         if(food.x !== data.food.x || food.y !== data.food.y) {
             food = data.food;
@@ -68,6 +65,7 @@ function newConnection(socket) {
         for(var i = 0; i < snakes.length; i++) {
             if(socket.id == snakes[i].id) {
                 var snake = snakes[i];
+                // reset snake
                 snakes[i] = new Snake(socket.id, snake.x, snake.y);
             }
         }
