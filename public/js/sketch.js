@@ -83,6 +83,11 @@ function draw() {
 				fill(0,0,255);
 				for(var i = 0; i < snake.total; i++) {
 					rect(snake.tail[i].x, snake.tail[i].y, scl, scl);
+					var tail = {
+						x: s.tail[i].x,
+						y: s.tail[i].y
+					}
+					data.tail.push(tail);
 				}
 			}
 
@@ -107,16 +112,6 @@ function draw() {
 			y: food.y
 		}
 	};
-
-	if(s.tail.length) {
-		for(var i = 0; i < s.tail.length; i++) {
-			var tail = {
-				x: s.tail[i].x,
-				y: s.tail[i].y
-			}
-			data.tail.push(tail);
-		}
-	}
 
 	socket.emit('update', data);
 }

@@ -86,6 +86,7 @@ function Snake(color, x, y) {
 
 	this.update = function() {
 		if(this.total === this.tail.length) {
+			// update tail position
 			for (var i = 0; i < this.tail.length - 1; i++) {
 				this.tail[i] = this.tail[i+1];
 			}

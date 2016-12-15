@@ -43,7 +43,6 @@ function newConnection(socket) {
 
     // client update
     socket.on('update', function(data) {
-        console.log(data);
         var snake;
         for(var i = 0; i < snakes.length; i++) {
             if(socket.id == snakes[i].id) {
