@@ -73,23 +73,23 @@ function draw() {
 
 	for(var i = snakes.length - 1; i >= 0; i--) {
 		if(snakes[i].id !== socket.id) {
-			// draw external snake
 			var snake = snakes[i];
-			fill(0,0,255);
-			rect(snake.x, snake.y, scl, scl);
 
 			// draw tail
-			if(snake.total > 0 && snake.tail) {
-				fill(0,0,255);
-				for(var i = 0; i < snake.total; i++) {
-					rect(snake.tail[i].x, snake.tail[i].y, scl, scl);
-					var tail = {
-						x: s.tail[i].x,
-						y: s.tail[i].y
-					}
-					data.tail.push(tail);
-				}
+			// if(snake.total === snake.tail.length) {
+			// 	// update tail position
+			// 	for(var i = 0; i < snake.tail.length - 1; i++) {
+			// 		snake.tail[i] = snake.tail[i+1];
+			// 	}
+			// }
+			// snake.tail[snake.total-1] = createVector(snake.x, snake.y);
+			
+			fill(0,0,255);
+			for(var i = 0; i < snake.total; i++) {
+				rect(snake.tail[i].x, snake.tail[i].y, scl, scl);
 			}
+			rect(snake.x, snake.y, scl, scl);
+
 
 			// show user id below snake
 			fill(255);
@@ -112,6 +112,13 @@ function draw() {
 			y: food.y
 		}
 	};
+	for(var i = 0; i < s.tail.length; i++) {
+		var tail = {
+			x: s.tail[i].x,
+			y: s.tail[i].y
+		}
+		data.tail.push(tail);
+	}
 
 	socket.emit('update', data);
 }

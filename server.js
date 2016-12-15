@@ -52,14 +52,14 @@ function newConnection(socket) {
                 snakes[i].tail = data.tail;
             }
         }
-        if(food.x !== data.food.x || food.y !== data.food.y) {
+        if(food && food.x !== data.food.x || food.y !== data.food.y) {
             food = data.food;
             io.sockets.emit('foodPosition', food);
         }
     });
 
     // snake dies
-    socket.on('die', function(data) {
+    socket.on('die', function() {
         console.log(socket.id + ' died');
         for(var i = 0; i < snakes.length; i++) {
             if(socket.id == snakes[i].id) {
