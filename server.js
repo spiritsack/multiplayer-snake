@@ -43,6 +43,7 @@ function newConnection(socket) {
 
     // client update
     socket.on('update', function(data) {
+        console.log(data);
         var snake;
         for(var i = 0; i < snakes.length; i++) {
             if(socket.id == snakes[i].id) {
@@ -52,15 +53,22 @@ function newConnection(socket) {
         if(snake) {
             snake.x = data.x;
             snake.y = data.y;
-            if(snake.tail) {
-                snake.tail = data.tail;
-            }
             snake.total = data.total;
+            snake.tail = data.tail;
         }
-        if(food) {
-            if(food.x !== data.food.x || food.y !== data.food.y) {
-                food = data.food;
-                io.sockets.emit('foodPosition', food);
+        if(food.x !== data.food.x || food.y !== data.food.y) {
+            food = data.food;
+            io.sockets.emit('foodPosition', food);
+        }
+    });
+
+    // snake dies
+    socket.on('die', function(data) {
+        console.log(socket.id + ' died');
+        for(var i = 0; i < snakes.length; i++) {
+            if(socket.id == snakes[i].id) {
+                var snake = snakes[i];
+                snakes[i] = new Snake(socket.id, snake.x, snake.y);
             }
         }
     });
@@ -73,17 +81,6 @@ function newConnection(socket) {
             }
         }
       console.log('Client ' + socket.id + ' has disconnected');
-    });
-
-    // client dies
-    socket.on('die', function(data) {
-        console.log(socket.id + ' died');
-        for(var i = 0; i < snakes.length; i++) {
-            if(socket.id == snakes[i].id) {
-                var snake = snakes[i];
-                snakes[i] = new Snake(socket.id, snake.x, snake.y);
-            }
-        }
     });
 }
 

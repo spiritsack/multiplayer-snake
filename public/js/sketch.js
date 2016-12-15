@@ -30,12 +30,14 @@ function setup() {
 	var data = {
 		x: s.x,
 		y: s.y,
+		total: s.total,
+		tail: [],
 		food: {
 			x: food.x,
 			y: food.y
-		},
-		total: s.total
+		}
 	};
+	
 	// console.log(data);
 	socket.emit('start', data);
 
@@ -98,12 +100,24 @@ function draw() {
 	var data = {
 		x: s.x,
 		y: s.y,
+		total: s.total,
+		tail: [],
 		food: {
 			x: food.x,
 			y: food.y
-		},
-		total: s.total
+		}
 	};
+
+	if(s.tail.length) {
+		for(var i = 0; i < s.tail.length; i++) {
+			var tail = {
+				x: s.tail[i].x,
+				y: s.tail[i].y
+			}
+			data.tail.push(tail);
+		}
+	}
+
 	socket.emit('update', data);
 }
 
