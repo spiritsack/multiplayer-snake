@@ -25,7 +25,7 @@ function setup() {
 	score = createDiv('score: '+s.total, 540, 605)
 	score.position(540, 605);
 
-    socket = io.connect('http://10.33.56.202:3000');
+    socket = io.connect('http://localhost:3000');
 
 	var data = {
 		x: s.x,
