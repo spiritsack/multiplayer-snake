@@ -53,11 +53,9 @@ function spawnFood(x,y) {
 		var cols = this.floor(width/scl);
 		var rows = this.floor(height/scl);
 		food = createVector(floor(random(rows)), floor(random(cols)));
-		// console.log('New food on pos: ' + x + ' ' + y);
 		food.mult(scl);
 	}
 	else {
-		// console.log('Exisiting food on pos: ' + x + ' ' + y);
 		food = createVector(x, y);
 	}
 }
@@ -72,20 +70,21 @@ function draw() {
 	s.show();
 
 	for(var i = snakes.length - 1; i >= 0; i--) {
-		// console.log(snakes);
 		if(snakes[i].id !== socket.id) {
+			// draw external snake
 			var snake = snakes[i];
 			fill(0,0,255);
 			rect(snake.x, snake.y, scl, scl);
 
+			// draw tail
 			if(snake.total > 0 && snake.tail) {
 				fill(0,0,255);
-				console.log(snake);
 				for(var i = 0; i < snake.total; i++) {
 					rect(snake.tail[i].x, snake.tail[i].y, scl, scl);
 				}
 			}
 
+			// show user id below snake
 			fill(255);
 			textAlign(CENTER);
 			textSize(12);

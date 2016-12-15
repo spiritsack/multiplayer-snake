@@ -31,16 +31,13 @@ function Snake(color, x, y) {
 				total: s.total,
 				tail: []
 			};
-			console.log(this.tail);
 			for (var i = 0; i < this.tail.length - 1; i++) {
-				console.log(i);
 				var tail = {
 					x: this.tail[i].x,
 					y: this.tail[i].y,
 				};
 				data.tail.push(tail) 
 			}
-			console.log(data);
 			socket.emit('update', data);
 			return true;
 		}

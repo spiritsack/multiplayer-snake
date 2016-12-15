@@ -14,7 +14,7 @@ var socket = require('socket.io');
 
 var io = socket(server);
 
-setInterval(heartbeat, 5);
+setInterval(heartbeat, 100);
 
 function heartbeat() {
     io.sockets.emit('heartbeat', snakes);
@@ -30,9 +30,7 @@ function newConnection(socket) {
         console.log('New client: ' + socket.id + ' ' + data.x + ' ' + data.y);
         var snake = new Snake(socket.id, data.x, data.y);
         snakes.push(snake);
-        // console.log(data);
         if(!food) {
-            // console.log('Food spawn');
             food = {
                 x : data.food.x,
                 y : data.food.y
@@ -41,7 +39,6 @@ function newConnection(socket) {
         else {
             io.sockets.emit('foodPosition', food);
         }
-        // console.log(food);
     });
 
     // client update
@@ -52,7 +49,6 @@ function newConnection(socket) {
                 snake = snakes[i];
             }
         }
-        // console.log(socket.id + ' ' + data.x + ' ' + data.y);
         if(snake) {
             snake.x = data.x;
             snake.y = data.y;
@@ -60,7 +56,6 @@ function newConnection(socket) {
                 snake.tail = data.tail;
             }
             snake.total = data.total;
-            // console.log(snake);
         }
         if(food) {
             if(food.x !== data.food.x || food.y !== data.food.y) {
@@ -78,32 +73,6 @@ function newConnection(socket) {
             }
         }
       console.log('Client ' + socket.id + ' has disconnected');
-    });
-
-    // client grows in length
-    socket.on('grow', function(data) {
-        console.log(socket.id + ' grew');
-        // console.log(data);
-        // find correct snake
-        // for(var i = 0; i < snakes.length; i++) {
-            // if(socket.id == snakes[i].id) {
-            //     // found snake
-            //     console.log(data);
-            //     var s = snakes[i];
-            //     s.total = data.total;
-            //     for (var i = 0; i < data.total; i++) {
-            //         s.tail[i] = 'x';
-            //     }
-                // s.tail[data.total-1] = {
-                //     x: s.x,
-                //     y: s.y
-                // };
-
-                // s.x = s.x + s.xspeed*scl;
-                // s.y = s.y + s.yspeed*scl;
-            //     console.log(s);
-            // }
-        // }
     });
 
     // client dies
@@ -126,5 +95,4 @@ function Snake(id, x, y) {
     this.yspeed = 0;
     this.total = 0;
     this.tail = [];
-    this.tailLength = 0;
 }
